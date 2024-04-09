@@ -2,30 +2,41 @@ import pygame
 
 pygame.init()
 w = 800
-h = 400
-sc = pygame.display.set_mode((w, h))
-pygame.display.set_caption("Circle")
-run = True
-x = w//2
-y = h//2
+import pygame
+from pygame.locals import QUIT
+
+pygame.init()
+w = 200
+h = 200
+screen = pygame.display.set_mode((w, h))
+pygame.display.set_caption('ball')
+
+x = 100
+y = 100
 r = 25
-v = 20
-clock = pygame.time.Clock()
-while run:
-    clock.tick(100)
-    sc.fill((255,255,255))
-    circle = pygame.draw.circle(sc,(255, 0, 0), (x,y), r)
-    pygame.display.update()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-            pygame.quit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT and x > r:
-                x-=v
-            if event.key == pygame.K_RIGHT and x < w-r:
-                x+=v
-            if event.key == pygame.K_UP and y > r:
-                y-=v
-            if event.key == pygame.K_DOWN and y < h-r:
-                y+=v
+
+red = (200, 0, 0)
+
+running = True
+while True:
+   for event in pygame.event.get():
+      if event.type == QUIT:
+           pygame.quit()
+           running = False
+      elif event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_LEFT:
+          x -= 20
+        elif event.key == pygame.K_RIGHT:
+          x += 20
+        elif event.key == pygame.K_UP:  
+          y -= 20
+        elif event.key == pygame.K_DOWN:
+          y += 20
+
+   x = max(r, min(w - r, x))
+   y = max(r, min(h - r, y))
+
+   screen.fill((255, 255, 255))
+   pygame.draw.circle(screen, red, (x, y), r)
+
+   pygame.display.update()
